@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<input v-model="task" placeholder="напиши задачу">
+		<input v-model="task" placeholder="напиши задачу" @keyup.enter="addTask">
 		<button @click="addTask">нажми, чтобы добавить таск</button>
 	</div>
 </template>

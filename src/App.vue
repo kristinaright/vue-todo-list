@@ -15,5 +15,6 @@
 </script>
 
 <style>
+	@import "/assets/styles/main.less";
 </style>
 

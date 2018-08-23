@@ -4,6 +4,7 @@
 		<ol>
 			<li v-for="todoItem in plannedTasks" :key="todoItem.id">{{todoItem.title}}
 				<button @click="removeTask(todoItem.id)">х</button>
+				<button @click="performTask(todoItem.id)">сделано</button>
 			</li>
 		</ol>
 		<h4>Выполненные</h4>
@@ -34,6 +35,11 @@
     methods: {
       removeTask(taskId) {
         this.$eventBus.$emit('removeTask', {
+          currentTaskId: taskId,
+        });
+      },
+      performTask(taskId) {
+        this.$eventBus.$emit('performTask', {
           currentTaskId: taskId,
         });
       },
