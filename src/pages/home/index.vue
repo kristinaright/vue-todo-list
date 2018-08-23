@@ -29,7 +29,8 @@
 			</div>
 			<div v-if="!error.isActive">
 				<entry-field :tasks="tasks"></entry-field>
-				<to-do-list :todoList="tasks"></to-do-list>
+				<to-do-list v-if="tasks.length !== 0" :todoList="tasks"></to-do-list>
+				<div v-else>Мне нечего тебе показать</div>
 			</div>
 			<button v-else @click="errorDeactivate" class="error-button">I will not play tricks anymore. I promise
 			</button>
