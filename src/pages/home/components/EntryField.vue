@@ -8,8 +8,11 @@
 </template>
 
 <script>
+  import Find from 'lodash/find';
+
   export default {
     name: "entry-field",
+    props: ['tasks'],
     data() {
       return {
         task: '',
@@ -25,12 +28,22 @@
           if (~this.task.toLowerCase().indexOf(scriptStart) && ~this.task.toLowerCase().indexOf(scriptEnd)) {
             this.$eventBus.$emit('onError', {
               error: true,
-              errorText: 'It looks like you\'re using forbidden characters!<br/> Do not hurt me like that!',
+              errorText: "It looks like you\'re using forbidden characters!<br/> Don't hurt me like that!",
             });
           } else {
-            this.$eventBus.$emit('addTask', {
-              task: this.task,
+            let taskFound = Find(this.tasks, (existingTask) => {
+              return existingTask.title == this.task;
             });
+            if (taskFound !== undefined) {
+              this.$eventBus.$emit('onError', {
+                error: true,
+                errorText: "It seems that such task already exists!<br/> Don't repeat yourself!",
+              });
+            } else {
+              this.$eventBus.$emit('addTask', {
+                task: this.task,
+              });
+            }
           }
           this.task = '';
         }
