@@ -3,9 +3,9 @@
 		<div class="page__container">
 			<div class="home-page__cat">
 				<div class="home-page__cat_speech">
-					<h4>Hi! I'm Victor.<br>It's my TODO list with Vue.js.<br>You can test it.<br>Nice to meet u :)</h4>
+					<h4 v-html="error.isActive ? error.text : defaultGreeting"></h4>
 				</div>
-				<div class="home-page__cat_face">
+				<div class="home-page__cat_face" :class="{'sad-cat': error.isActive}">
 					<div class="home-page__cat_face-ear left-ear">
 						<div class="home-page__cat_face-ear-tip"></div>
 					</div>
@@ -27,8 +27,12 @@
 					<div class="home-page__cat_face-mouth"></div>
 				</div>
 			</div>
-			<entry-field></entry-field>
-			<to-do-list :todoList="tasks"></to-do-list>
+			<div v-if="!error.isActive">
+				<entry-field></entry-field>
+				<to-do-list :todoList="tasks"></to-do-list>
+			</div>
+			<button v-else @click="errorDeactivate" class="error-button">I will not play tricks anymore. I promise
+			</button>
 		</div>
 	</div>
 </template>
@@ -46,9 +50,15 @@
       return {
         tasks: [],
         nextTodoId: 0,
+        defaultGreeting: 'Hi! I\'m Victor.<br/>It\'s my TODO list with Vue.js.<br/>You can test it.<br/>Nice to meet u :)',
+        error: {
+          isActive: false,
+          text: '',
+        },
       };
     },
     mounted() {
+
       this.$eventBus.$on('addTask', data => {
         this.tasks.push({
           id: this.nextTodoId++,
@@ -64,6 +74,10 @@
       this.$eventBus.$on('performTask', data => {
         this.performTask(data);
       });
+
+      this.$eventBus.$on('onError', data => {
+        this.onError(data);
+      });
     },
     methods: {
       removeTask(data) {
@@ -77,6 +91,13 @@
           return task.id == data.currentTaskId;
         });
         currentTask.isDone = true;
+      },
+      onError(data) {
+        this.error.isActive = data.error;
+        this.error.text = data.errorText;
+      },
+      errorDeactivate() {
+        this.error.isActive = false;
       },
     },
   };
@@ -168,6 +189,7 @@
 			position: absolute;
 			top: 2px;
 			left: 1.6px;
+			transition: top .3s ease-in;
 		}
 		.home-page__cat_face-glare-2 {
 			background-color: rgba(255, 255, 255, .25);
@@ -188,6 +210,7 @@
 		position: absolute;
 		top: -8px;
 		z-index: 0;
+		transition: top .3s ease-in;
 		&.left-ear {
 			left: 2px;
 		}
@@ -217,5 +240,41 @@
 		position: absolute;
 		left: 34px;
 		top: 46px;
+		transition: all .3s ease-in;
+	}
+
+	.sad-cat {
+		.home-page__cat_face-ear {
+			top: -2px;
+		}
+		.home-page__cat_face-eye {
+			.home-page__cat_face-glare-bg {
+				top: 4px;
+			}
+		}
+		.home-page__cat_face-mouth {
+			border-right: 2px solid rgba(0, 0, 0, .8);
+			border-left: none;
+			border-radius: 0px 150px 150px 0px;
+		}
+	}
+
+	.error-button {
+		border: none;
+		background-color: darken(@pink_color, 20);
+		color: @white_color;
+		text-transform: uppercase;
+		font-weight: normal;
+		padding: 12px 32px;
+		cursor: pointer;
+		transition: border-bottom .2s ease-in-out;
+		width: 100%;
+		margin-top: 50px;
+		&:focus, &:active {
+			outline: none;
+		}
+		&:hover {
+			background-color: darken(@pink_color, 25);
+		}
 	}
 </style>
