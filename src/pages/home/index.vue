@@ -17,12 +17,16 @@
 						<div class="home-page__cat_face-glare"></div>
 						<div class="home-page__cat_face-glare-bg"></div>
 						<div class="home-page__cat_face-glare-2"></div>
+						<div class="home-page__cat_face-tear"></div>
+						<div class="home-page__cat_face-cheek"></div>
 					</div>
 					<div class="home-page__cat_face-eye right-eye">
 						<div class="home-page__cat_face-pupil"></div>
 						<div class="home-page__cat_face-glare"></div>
 						<div class="home-page__cat_face-glare-bg"></div>
 						<div class="home-page__cat_face-glare-2"></div>
+						<div class="home-page__cat_face-tear"></div>
+						<div class="home-page__cat_face-cheek"></div>
 					</div>
 					<div class="home-page__cat_face-mouth"></div>
 				</div>
@@ -161,9 +165,20 @@
 		top: 19px;
 		&.left-eye {
 			left: 12px;
+			.home-page__cat_face-tear {
+				left: -10px;
+				border-radius: 50% 0 50% 50%;
+			}
 		}
 		&.right-eye {
 			right: 12px;
+			.home-page__cat_face-tear {
+				right: -12px;
+				border-radius: 0 50% 50% 50%;
+			}
+			.home-page__cat_face-cheek {
+				right: 4px;
+			}
 		}
 		.home-page__cat_face-pupil {
 			background-color: rgba(0, 0, 0, .8);
@@ -201,10 +216,29 @@
 			top: 6px;
 			left: 3.5px;
 		}
+		.home-page__cat_face-tear {
+			background: rgba(147, 233, 255, 0.92);
+			height: 14px;
+			width: 14px;
+			position: absolute;
+			top: 15px;
+			opacity: 0;
+			transition: opacity .4s ease-in;
+		}
+		.home-page__cat_face-cheek {
+			background: rgba(255, 117, 149, 0.5);
+			height: 8px;
+			width: 16px;
+			position: absolute;
+			top: 26px;
+			border-radius: 40%;
+			opacity: 1;
+			transition: opacity .4s ease-in;
+		}
 	}
 
 	.home-page__cat_face-ear {
-		background-color: darken(#FF9166, 2);
+		background-color: darken(#FF9166, 1);
 		height: 42px;
 		width: 38px;
 		border-radius: 50%;
@@ -240,7 +274,7 @@
 		transform: translate(0px) rotate(-90deg);
 		position: absolute;
 		left: 34px;
-		top: 46px;
+		top: 48px;
 		transition: all .3s ease-in;
 	}
 
@@ -257,6 +291,12 @@
 			border-right: 2px solid rgba(0, 0, 0, .8);
 			border-left: none;
 			border-radius: 0px 150px 150px 0px;
+		}
+		.home-page__cat_face-tear {
+			opacity: 1;
+		}
+		.home-page__cat_face-cheek {
+			opacity: 0;
 		}
 	}
 
