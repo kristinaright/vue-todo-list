@@ -46,6 +46,11 @@
             }
           }
           this.task = '';
+        } else {
+          this.$eventBus.$emit('onError', {
+            error: true,
+            errorText: "Your task is empty!<br/>Really, dude?<br/>You really don't know anything more interesting?",
+          });
         }
       },
       inputBlur() {

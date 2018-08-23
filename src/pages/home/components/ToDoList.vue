@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<h4>Запланированные</h4>
+		<h4 v-if="plannedTasks.length !== 0">Запланированные</h4>
 		<ol>
 			<li v-for="todoItem in plannedTasks" :key="todoItem.id">{{todoItem.title}}
 				<button @click="removeTask(todoItem.id)">х</button>
 				<button @click="performTask(todoItem.id)">сделано</button>
 			</li>
 		</ol>
-		<h4>Выполненные</h4>
+		<h4 v-if="readyTasks.length !== 0">Выполненные</h4>
 		<ol>
 			<li v-for="todoItem in readyTasks" :key="todoItem.id">{{todoItem.title}}</li>
 		</ol>
